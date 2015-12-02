@@ -34,14 +34,26 @@ describe Oystercard do
   end
 
   it 'Passing touch_in should change in Journey to true' do
+    oystercard.top_up(Oystercard::LIMIT)
     oystercard.touch_in
     expect(oystercard).to be_in_journey
   end
   it 'Passing touch_out should change in_Journey to false' do
+    oystercard.top_up(Oystercard::LIMIT)
     oystercard.touch_in
     oystercard.touch_out
     expect(oystercard).not_to be_in_journey
   end
 end
+describe '#touch_in' do
+  it 'Raise an error when touching in if balance is less than £1' do
+    expect{oystercard.touch_in}.to raise_error "Insufficient funds: Please add top up"
+  end
+
+
+
+end
+
+
 
 end

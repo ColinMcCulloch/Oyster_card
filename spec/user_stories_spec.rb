@@ -9,10 +9,7 @@
 # As a customer
 # I need to touch in and out
 #
-# I order to pay for my journey
-# As a customer
-# I need to have the minimum amount for a single journey
-#
+
 # Inorder to pay for my journey
 # As a customer
 # I need to pay for my journey when it's complete
@@ -71,6 +68,7 @@ end
 
 
  it 'respond to touch_in' do
+   oystercard.top_up(Oystercard::LIMIT)
     expect { oystercard.touch_in }.not_to raise_error
   end
 
@@ -78,6 +76,10 @@ end
   it 'respond to touch_out' do
      expect { oystercard.touch_out }.not_to raise_error
    end
+
+   # I order to pay for my journey
+   # As a customer
+   # I need to have the minimum amount for a single journey
 
 
 
