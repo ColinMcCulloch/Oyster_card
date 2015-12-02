@@ -13,22 +13,19 @@ MINIMUM_FARE=1
     self.balance += cash
   end
 
-  def deduct(cash)
-    self.balance -= cash
-  end
-
   def in_journey?
     @in_journey
   end
 
   def touch_in
     fail "Insufficient funds: Please add top up" if balance < MINIMUM_FARE
-     
+
 
     @in_journey = true
 
   end
   def touch_out
+    deduct(MINIMUM_FARE)
     @in_journey = false
   end
 
@@ -37,6 +34,10 @@ MINIMUM_FARE=1
 
   def balance=(cash) # excluding condition => equivalent to attr_writer :balance
     @balance = cash if cash.is_a?(Fixnum)
+  end
+
+  def deduct(cash)
+    self.balance -= cash
   end
 
 end

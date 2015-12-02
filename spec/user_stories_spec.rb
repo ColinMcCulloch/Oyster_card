@@ -10,9 +10,6 @@
 # I need to touch in and out
 #
 
-# Inorder to pay for my journey
-# As a customer
-# I need to pay for my journey when it's complete
 #
 # In rder to pay for my journey
 # As a customer
@@ -54,9 +51,7 @@ describe 'User Story' do
  #In order to pay for my journey
  # As a customer
  # I need my fare deducted from my card
- it 'respond to deduct' do
-   expect { oystercard.deduct(1) }.not_to raise_error
- end
+
 
  # n order to get through the barriers
  # As a customer
@@ -81,7 +76,9 @@ end
    # As a customer
    # I need to have the minimum amount for a single journey
 
-
+  #Inorder to pay for my journey
+  # As a customer
+  # I need to pay for my journey when it's complete
 
 
 

@@ -19,13 +19,6 @@ describe Oystercard do
     end
  end
 
- describe '#deduct' do
-
-   it 'deducts money' do
-     expect { oystercard.deduct(10) }.to change{ oystercard.balance }.by -10
-   end
- end
-
  describe '#in_journey?' do
 
   it "Should return nil before touching in" do
@@ -49,11 +42,15 @@ describe '#touch_in' do
   it 'Raise an error when touching in if balance is less than £1' do
     expect{oystercard.touch_in}.to raise_error "Insufficient funds: Please add top up"
   end
-
-
-
 end
 
+describe '#touch_out' do
+  it 'Should deduct the minimum fare on touch_out' do
+    oystercard.top_up(Oystercard::LIMIT)
+    oystercard.touch_in
+    expect { oystercard.touch_out }.to change { oystercard.balance }.by -1
+  end
+end
 
 
 end
