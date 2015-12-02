@@ -11,9 +11,6 @@
 #
 
 #
-# In rder to pay for my journey
-# As a customer
-# I need to know where I've travelled from
 #
 # In oder to know where I have been
 # As a customer
@@ -33,6 +30,7 @@
 require 'oystercard'
 describe 'User Story' do
   let(:oystercard) { Oystercard.new }
+  let(:station) {double :station}
   it 'respond to balance' do
     expect { oystercard.balance }.not_to raise_error
   end
@@ -64,14 +62,20 @@ end
 
  it 'respond to touch_in' do
    oystercard.top_up(Oystercard::LIMIT)
-    expect { oystercard.touch_in }.not_to raise_error
+    expect { oystercard.touch_in(station) }.not_to raise_error
   end
 
 
   it 'respond to touch_out' do
      expect { oystercard.touch_out }.not_to raise_error
    end
-
+   # In rder to pay for my journey
+   # As a customer
+   # I need to know where I've travelled from
+  it 'Does not raise an error when using touch_in with a station' do
+    oystercard.top_up(20)
+    expect {oystercard.touch_in(station)}.not_to raise_error
+  end
    # I order to pay for my journey
    # As a customer
    # I need to have the minimum amount for a single journey
