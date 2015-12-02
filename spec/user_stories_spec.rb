@@ -3,9 +3,7 @@
 # I want to add money to my card
 #
 #
-#In order to pay for my journey
-# As a customer
-# I need my fare deducted from my card
+
 #
 # n order to get through the barriers
 # As a customer
@@ -62,6 +60,24 @@ describe 'User Story' do
  it 'respond to deduct' do
    expect { oystercard.deduct(1) }.not_to raise_error
  end
+
+ # n order to get through the barriers
+ # As a customer
+ # I need to touch in and out
+it 'responds to in_journey' do
+  expect { oystercard.in_journey? }.not_to raise_error
+end
+
+
+
+ it 'respond to touch_in' do
+    expect { oystercard.touch_in }.not_to raise_error
+  end
+
+
+  it 'respond to touch_out' do
+     expect { oystercard.touch_out }.not_to raise_error
+   end
 
 
 

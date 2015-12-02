@@ -16,10 +16,22 @@ LIMIT=90
     self.balance -= cash
   end
 
+  def in_journey?
+    @in_journey
+  end
+
+  def touch_in
+    @in_journey = true
+  end
+  def touch_out
+    @in_journey = false
+  end
+  
+
   private
 
   def balance=(cash) # excluding condition => equivalent to attr_writer :balance
-    @balance = cash if cash.is_a?(Fixnum) 
+    @balance = cash if cash.is_a?(Fixnum)
   end
 
 end

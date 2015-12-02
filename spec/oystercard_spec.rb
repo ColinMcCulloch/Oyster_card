@@ -9,7 +9,7 @@ describe Oystercard do
      end
    end
  describe '#top_up' do
-     it { is_expected.to respond_to(:top_up).with(1).argument }
+
     it 'adds cash to the oystercard' do
       expect { oystercard.top_up(10) }.to change{ oystercard.balance }.by 10
     end
@@ -20,13 +20,28 @@ describe Oystercard do
  end
 
  describe '#deduct' do
-   it 'respond to deduct' do
-       is_expected.to respond_to(:deduct).with(1).argument
-   end
 
    it 'deducts money' do
      expect { oystercard.deduct(10) }.to change{ oystercard.balance }.by -10
    end
  end
+
+ describe '#in_journey?' do
+
+  it "Should return nil before touching in" do
+    #expect (oystercard.in_journey?).to be (false) why not work?
+    expect(oystercard).not_to be_in_journey
+  end
+
+  it 'Passing touch_in should change in Journey to true' do
+    oystercard.touch_in
+    expect(oystercard).to be_in_journey
+  end
+  it 'Passing touch_out should change in_Journey to false' do
+    oystercard.touch_in
+    oystercard.touch_out
+    expect(oystercard).not_to be_in_journey
+  end
+end
 
 end
