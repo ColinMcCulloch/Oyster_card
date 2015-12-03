@@ -22,7 +22,6 @@ MINIMUM_FARE=1
 
   def touch_in(entry_station)
     fail "Insufficient funds: Please add top up" if balance < MINIMUM_FARE
-    # @in_journey = true
     @current_journey[0] = entry_station
   end
 
