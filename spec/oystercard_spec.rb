@@ -3,7 +3,8 @@ describe Oystercard do
   #oystercard = Oystercard.new
 #let(:oystercard) { double :oystercard }
   let(:oystercard) { described_class.new }
-  let(:station) {double :station}
+  let(:entry_station) {double :entry_station}
+  let(:exit_station) {double :exit_station}
    describe '#balance' do
      it 'returns balance as 0' do
        expect(oystercard.balance).to eq (0)
@@ -29,24 +30,24 @@ describe Oystercard do
 
   it 'Passing touch_in should change in Journey to true' do
     oystercard.top_up(Oystercard::LIMIT)
-    oystercard.touch_in(station)
+    oystercard.touch_in(entry_station)
     expect(oystercard).to be_in_journey
   end
   it 'Passing touch_out should change in_Journey to false' do
     oystercard.top_up(Oystercard::LIMIT)
-    oystercard.touch_in(station)
-    oystercard.touch_out
+    oystercard.touch_in(entry_station)
+    oystercard.touch_out(exit_station)
     expect(oystercard).not_to be_in_journey
   end
 end
 describe '#touch_in' do
   it 'Raise an error when touching in if balance is less than £1' do
-    expect{oystercard.touch_in(station)}.to raise_error "Insufficient funds: Please add top up"
+    expect{oystercard.touch_in(entry_station)}.to raise_error "Insufficient funds: Please add top up"
   end
   it 'should on touch_in record station' do
     oystercard.top_up(20)
-    oystercard.touch_in(station)
-    expect(oystercard.entry_station).to eq station
+    oystercard.touch_in(entry_station)
+    expect(oystercard.entry_station).to eq entry_station
   end
 
 end
@@ -54,8 +55,14 @@ end
 describe '#touch_out' do
   it 'Should deduct the minimum fare on touch_out' do
     oystercard.top_up(Oystercard::LIMIT)
-    oystercard.touch_in(station)
-    expect { oystercard.touch_out }.to change { oystercard.balance }.by -Oystercard::MINIMUM_FARE
+    oystercard.touch_in(entry_station)
+    expect { oystercard.touch_out(exit_station) }.to change { oystercard.balance }.by -Oystercard::MINIMUM_FARE
+  end
+  it "Should record an exit station on touch_out" do
+    oystercard.top_up(30)
+    oystercard.touch_in("Brixton")
+    oystercard.touch_out("Victoria")
+    expect(oystercard.exit_station).to eq "Victoria"
   end
 end
 
