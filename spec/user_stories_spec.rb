@@ -67,9 +67,9 @@ end
   end
 
 
-  it 'respond to touch_out' do
-     expect { oystercard.touch_out(exit_station) }.not_to raise_error
-   end
+  # it 'respond to touch_out' do
+  #    expect { oystercard.touch_out(exit_station) }.not_to raise_error
+  #  end
    # In rder to pay for my journey
    # As a customer
    # I need to know where I've travelled from
