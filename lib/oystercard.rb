@@ -1,11 +1,13 @@
 class Oystercard
 
-attr_reader :balance, :entry_station, :exit_station
+attr_reader :balance, :entry_station, :exit_station, :history
 LIMIT=90
 MINIMUM_FARE=1
 
   def initialize
     self.balance = 0
+    @history = {}
+    @counter = 0
   end
 
   def top_up(cash)
@@ -24,8 +26,10 @@ MINIMUM_FARE=1
 
   def touch_out(exit_station)
     deduct(MINIMUM_FARE)
-    @entry_station = nil
     @exit_station = exit_station
+    @counter += 1
+    @history[:"J#{@counter}"] = [entry_station, exit_station]
+    @entry_station = nil
   end
 
 

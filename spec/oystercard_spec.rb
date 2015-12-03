@@ -16,8 +16,9 @@ describe Oystercard do
       expect { oystercard.top_up(10) }.to change{ oystercard.balance }.by 10
     end
     it 'prevent balance from exceeding £90' do
+      over_90 = "Balance cannot exceed £#{Oystercard::LIMIT}"
       oystercard.top_up(90)
-      expect {oystercard.top_up(1)}.to raise_error "Balance cannot exceed £#{Oystercard::LIMIT}"
+      expect {oystercard.top_up(1)}.to raise_error over_90
     end
  end
 
@@ -42,7 +43,8 @@ describe Oystercard do
 end
 describe '#touch_in' do
   it 'Raise an error when touching in if balance is less than £1' do
-    expect{oystercard.touch_in(entry_station)}.to raise_error "Insufficient funds: Please add top up"
+    insufficient_funds = "Insufficient funds: Please add top up"
+    expect{oystercard.touch_in(entry_station)}.to raise_error insufficient_funds
   end
   it 'should on touch_in record station' do
     oystercard.top_up(20)
@@ -65,6 +67,27 @@ describe '#touch_out' do
     expect(oystercard.exit_station).to eq "Victoria"
   end
 end
+
+describe '#history' do
+  it 'history is emty by default' do
+    expect(oystercard.history).to eq ({})
+  end
+  it 'stores Journey history' do
+    oystercard.top_up(30)
+    oystercard.touch_in("Brixton")
+    oystercard.touch_out("Victoria")
+    expect(oystercard.history).to eq ({J1: ["Brixton", "Victoria"]})
+  end
+  it 'Stores multiple journeys in history' do
+    oystercard.top_up(30)
+    oystercard.touch_in("Brixton")
+    oystercard.touch_out("Victoria")
+    oystercard.touch_in("Stockwell")
+    oystercard.touch_out("Pimlico")
+    expect(oystercard.history).to eq ({J1: ["Brixton", "Victoria"], J2: ["Stockwell", "Pimlico"]})
+  end
+end
+
 
 
 end
