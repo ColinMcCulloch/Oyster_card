@@ -1,7 +1,5 @@
 require 'oystercard'
 describe Oystercard do
-  #oystercard = Oystercard.new
-#let(:oystercard) { double :oystercard }
   let(:oystercard) { described_class.new }
   let(:entry_station) {double :entry_station}
   let(:exit_station) {double :exit_station}
@@ -25,7 +23,6 @@ describe Oystercard do
  describe '#in_journey?' do
 
   it "Should return nil before touching in" do
-    #expect (oystercard.in_journey?).to be (false) why not work?
     expect(oystercard).not_to be_in_journey
   end
 
@@ -46,11 +43,6 @@ describe '#touch_in' do
     insufficient_funds = "Insufficient funds: Please add top up"
     expect{oystercard.touch_in(entry_station)}.to raise_error insufficient_funds
   end
-  it 'should on touch_in record station' do
-    oystercard.top_up(20)
-    oystercard.touch_in(entry_station)
-    expect(oystercard.entry_station).to eq entry_station
-  end
 
 end
 
@@ -60,12 +52,7 @@ describe '#touch_out' do
     oystercard.touch_in(entry_station)
     expect { oystercard.touch_out(exit_station) }.to change { oystercard.balance }.by -Oystercard::MINIMUM_FARE
   end
-  it "Should record an exit station on touch_out" do
-    oystercard.top_up(30)
-    oystercard.touch_in("Brixton")
-    oystercard.touch_out("Victoria")
-    expect(oystercard.exit_station).to eq "Victoria"
-  end
+
 end
 
 describe '#history' do
